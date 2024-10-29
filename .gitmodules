@@ -1,0 +1,3 @@
+[submodule "src/lib/Sprout"]
+	path = src/lib/Sprout
+	url = https://github.com/bolero-MURAKAMI/Sprout

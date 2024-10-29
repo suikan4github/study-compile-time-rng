@@ -25,15 +25,15 @@
  */
 int main() {
   RandomMacAddrs rma;
+  uint8_t address[6];
 
 #if __has_include(<hardware/stdlib.h>)
   stdio_init_all();
 #endif
 
+  rma.Get(address);
   // count from 1 to num
-  for (int i = 1; i <= 10; i++)
-    //    printf("[CalcSqrt] The square root of %d is %f \n", i, calc.Get(i))
-    ;
+  for (int i = 0; i < 6; i++) printf("Address[%d] = %02x \n", i, address[i]);
 
   return 0;
 }
