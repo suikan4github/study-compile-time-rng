@@ -1,19 +1,18 @@
 // Test cases for the calc class
 
-#include "gtest/gtest.h"
-#include "calc.hpp"
 #include <stdexcept>
 
-TEST(Calc, Sqrt)
-{
-    Calc calc;
+#include "calc.hpp"
+#include "gtest/gtest.h"
 
-    EXPECT_EQ(calc.sqrt(4.0), 2.0);
+TEST(RandomMacAdrs, Sqrt) {
+  RandomMacAddrs calc;
+
+  //  EXPECT_EQ(calc.Get(4.0), 2.0);
 }
 
-TEST(Calc, SqrtPrrecision)
-{
-    Calc calc;
+TEST(RandomMacAdrs, SqrtPrrecision) {
+  RandomMacAddrs calc;
 
-    EXPECT_DOUBLE_EQ(calc.sqrt(2), 1.4142135623730951);
+  //  EXPECT_DOUBLE_EQ(calc.Get(2), 1.4142135623730951);
 }

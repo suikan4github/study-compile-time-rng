@@ -24,7 +24,7 @@
  * @return int Always 0
  */
 int main() {
-  Calc calc;
+  RandomMacAddrs rma;
 
 #if __has_include(<hardware/stdlib.h>)
   stdio_init_all();
@@ -32,7 +32,8 @@ int main() {
 
   // count from 1 to num
   for (int i = 1; i <= 10; i++)
-    printf("[CalcSqrt] The square root of %d is %f \n", i, calc.sqrt(i));
+    //    printf("[CalcSqrt] The square root of %d is %f \n", i, calc.Get(i))
+    ;
 
   return 0;
 }

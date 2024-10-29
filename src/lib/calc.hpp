@@ -8,19 +8,24 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <cmath>
+#include <stdint.h>
 
+#include <cmath>
 /**
  * @brief Test struct
  *
  */
-struct Calc
-{
-    /**
-     * @brief Calcurate the square root
-     *
-     * @param param Must be positive or zero.
-     * @return double square root of param
-     */
-    double sqrt(double param);
+struct RandomMacAddrs {
+ private:
+  static const int kAddressSize = 6;
+  const uint8_t mac_address_[kAddressSize] = {0};
+
+ public:
+  /**
+   * @brief Calculate the Random MAC address at compile time
+   *
+   * @param param Must be positive or zero.
+   * @return double square root of param
+   */
+  void Get(uint8_t mac_address[kAddressSize]);
 };
