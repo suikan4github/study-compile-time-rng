@@ -1,11 +1,11 @@
 /**
  * @file calc.hpp
- * @author your name (you@domain.com)
+ * @author Seiichi Horie
  * @brief
  * @version 0.1
- * @date 2022-01-22
+ * @date 2024-Oct-29
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (c) Seiichi Horie 2024
  *
  */
 #include <stdint.h>
@@ -19,7 +19,19 @@
 #include <type_traits>
 
 /**
- * @brief Test struct
+ * @brief Obtain a random private MAC address at compile time.
+ *
+ * @details
+ * This class obtain a random private MAC address at compile time.
+ * It is important to obtain in the compile time, especially for the
+ * bare metal system. Otherwise we have to ensure some random number
+ * hardware on the target.
+ *
+ * The random address is calculated by the Sprout library by
+ * Bolero Murakami.
+ *
+ *   https://github.com/bolero-MURAKAMI/Sprout
+ *
  *
  */
 struct RandomMacAddrs {
@@ -27,25 +39,31 @@ struct RandomMacAddrs {
   static const int kAddressSize = 6;
 
   //
-  //  SPROUT_UNIQUE_SEED は constexpr
-  //  として使える、ほぼユニークかつコンパイル毎に変化する std::size_t
-  //  値になる。
-  //  実装は、日時とファイル名と行の文字列からハッシュ値を生成している。
-  //
+  //  SPROUT_UNIQUE_SEED は constexpr is a has value from
+  // - Date and Time.
+  // - File name.
+  // - String of this line.
   static constexpr auto seed = SPROUT_UNIQUE_SEED;
   //
-  //  minstd_rand0 は 線形合同法エンジンのジェネレータ。
+  //  minstd_rand0 is a Linear congruential generator.
   //
   static constexpr auto engine = sprout::random::minstd_rand0(seed);
   //
-  //  uniform_smallint は 整数の一様分布。
-  //  ここでは [0 .. 255] の範囲。
+  //  The uniform_smallint is a range of the Uniform distribution.
+  //  We set it as the range of a byte number.
   //
   static constexpr auto distribution =
       sprout::random::uniform_smallint<uint8_t>(0, 255);
 
-  // The b1:0 of the first byte is always "10".
-  // This enforces the address to the private and unicast.
+  /**
+   * @brief A random address.
+   * @details
+   * The distribution(engine) returns always same number inside a
+   * compile. To obtain the next random value, we need to add "()".
+   *
+   * The b1:0 of the first byte is always "10". This enforces the address to the
+   * private and unicast.
+   */
   static constexpr uint8_t mac_address_[kAddressSize] = {
       distribution(engine) & 0xFE | 0x02, distribution(engine)(),
       distribution(engine)()(),           distribution(engine)()()(),
@@ -55,8 +73,8 @@ struct RandomMacAddrs {
   /**
    * @brief Calculate the Random MAC address at compile time
    *
-   * @param param Must be positive or zero.
-   * @return double square root of param
+   * @param mac_address 6bytes buffer to receive the random address.
+   * This address is private and unicast.
    */
-  void Get(uint8_t mac_address[kAddressSize]);
+  static void Get(uint8_t mac_address[kAddressSize]);
 };

@@ -24,14 +24,13 @@
  * @return int Always 0
  */
 int main() {
-  RandomMacAddrs rma;
   uint8_t address[6];
 
 #if __has_include(<hardware/stdlib.h>)
   stdio_init_all();
 #endif
 
-  rma.Get(address);
+  RandomMacAddrs::Get(address);
   // count from 1 to num
   for (int i = 0; i < 6; i++) printf("Address[%d] = %02x \n", i, address[i]);
 

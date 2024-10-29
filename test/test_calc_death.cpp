@@ -11,6 +11,6 @@ TEST(CalcDeathTest, SqrtWithMinusParam) {
 #ifndef NDEBUG
   RandomMacAddrs rma;
   // We test only when assert() works.
-  ASSERT_DEATH(rma.Get(nullptr), "");
+  ASSERT_DEATH(rma.Get(nullptr), "Parameter must be not null");
 #endif
 }
